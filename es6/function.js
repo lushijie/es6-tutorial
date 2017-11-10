@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-08 11:51:42
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-10 15:34:47
+* @Last Modified time: 2017-11-10 15:45:32
 */
 
 // // 函数形参默认值，形参惰性求值，每次运行时重新计算默认值表达式的值
@@ -52,6 +52,16 @@
 // // 默认参数引用类型！
 // let a = {name: 123};
 // (function (b = a) {
+//   let a = {name: 666}; // 作用域
 //   b.name = 456;
 // })();
 // console.log(a); // {name: 456}
+
+// tips 参数不得省略
+// function throwIfMissing() {
+//   throw new Error('Missing parameter');
+// }
+// function foo(mustBeProvided = throwIfMissing()) {
+//   return mustBeProvided;
+// }
+// foo()
