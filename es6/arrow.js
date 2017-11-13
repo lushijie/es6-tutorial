@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-07 15:12:48
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-10 18:44:07
+* @Last Modified time: 2017-11-13 16:48:49
 */
 
 // 箭头函数使用注意点
@@ -99,3 +99,4 @@
 //     (() => this.x).bind({ x: 'inner' })(); // outer
 //   ];
 // }).call({ x: 'outer' });
+
