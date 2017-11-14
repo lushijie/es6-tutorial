@@ -1,8 +1,8 @@
 /*
 * @Author: lushijie
-* @Date:   2017-06-20 15:29:53
+* @Date:   2017-11-14 15:29:53
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-06-26 10:05:38
+* @Last Modified time: 2017-11-14 09:23:56
 */
 var userB = {
   user: 'lushijie',
