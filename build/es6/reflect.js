@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 * @Author: lushijie
 * @Date:   2017-11-13 16:17:14
@@ -29,10 +31,10 @@
 // Reflect.setPrototypeOf(target, prototype)      => Object.setPrototypeOf(obj, newProto)
 
 
-let user = {};
+var user = {};
 
 // defineProperty
-Object.defineProperty(user, 'name1' , {
+Object.defineProperty(user, 'name1', {
   value: 'lushijie'
 });
 console.log(user.name1);
@@ -47,9 +49,9 @@ console.log('name1' in user);
 console.log(Reflect.has(user, 'name1'));
 
 // Reflect对象的方法与Proxy对象的方法一一对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法
-let userProxy = new Proxy(user, {
-  set: function(target, name, value, receiver) {
-    let success = Reflect.set(target, name, value, receiver);
+var userProxy = new Proxy(user, {
+  set: function set(target, name, value, receiver) {
+    var success = Reflect.set(target, name, value, receiver);
     if (success) {
       console.log('property ' + name + ' on ' + target + ' set to ' + value);
     }
@@ -62,7 +64,7 @@ userProxy.p = '6666';
 function Greeting(name) {
   this.name = name;
 }
-let instance = new Greeting('张三');
+var instance = new Greeting('张三');
 instance = Reflect.construct(Greeting, ['张三']);
 
 // Reflect.apply
