@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-16 11:22:52
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-16 11:50:18
+* @Last Modified time: 2017-11-20 16:13:39
 */
 
 console.log(...[1, 2, 3]);
@@ -93,3 +93,6 @@ console.log([NaN].includes(NaN)); // true
 
 // 由于空位的处理规则非常不统一，所以建议避免出现空位。
 // [1, , 2]  [1, undefined, 2]
+
+
+

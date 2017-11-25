@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-07 11:11:22
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-07 16:07:49
+* @Last Modified time: 2017-11-20 15:07:41
 */
 
 // class Animal {
@@ -56,25 +56,24 @@
 // }
 
 
-class Foo2 {
-  constructor() {
-    console.log(new.target === Foo2); // true
-    this.pro = 'foo';
-  }
+// class Foo2 {
+//   constructor() {
+//     console.log(new.target === Foo2); // true
+//     this.pro = 'foo';
+//   }
 
-  get fname() {
-    return this.pro;
-  }
-  set fname(value) {
-    this.pro = value;
-  }
+//   get fname() {
+//     return this.pro;
+//   }
+//   set fname(value) {
+//     this.pro = value;
+//   }
 
-  static getClassName() {
-    console.log(this.name);  // this point to the class
-  }
-}
-let f2 = new Foo2();
-Foo2.getClassName(); // Foo2
-// f2.fn(); // f2.fn is not a function
-
+//   static getClassName() {
+//     console.log(this.name);  // this point to the class
+//   }
+// }
+// let f2 = new Foo2();
+// Foo2.getClassName(); // Foo2
+// // f2.fn(); // f2.fn is not a function
 

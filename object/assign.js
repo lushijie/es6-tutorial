@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-20 15:15:16
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-20 16:10:28
+* @Last Modified time: 2017-11-25 17:06:01
 */
 // // // 异常会打断后续拷贝任务
 // // // Object.assign 方法只会拷贝源对象自身的并且可枚举的属性到目标对象
@@ -85,6 +85,9 @@ let copy = Object.assign({}, obj);
 // { foo: 1, bar: 2 }
 // copy.bar的值来自obj.bar的getter函数的返回值
 console.log(copy);
+
+
+
 
 // 下面这个函数会拷贝所有自有属性的属性描述符
 function completeAssign(target, ...sources) {
