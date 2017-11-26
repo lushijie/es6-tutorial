@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-25 21:30:21
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-25 22:40:28
+* @Last Modified time: 2017-11-26 12:46:53
 */
 
 // 那么__proto__是什么？
@@ -71,12 +71,6 @@ console.log(p.Salary); // 500
 
 
 
-// Function.prototype函数对象是个例外，没有prototype属性
-
-
-
-
-
 // 通常我们认为o1、o2是对象，即普通对象；f1、f2、f3为函数。
 // 但是其实函数也是对象，是由Function构造的，
 // f3这种写法就跟对象的创建的写法一样。f1、f2最终也都像f3一样是有Function这个函数构造出来的
@@ -90,14 +84,12 @@ var f3 = new Function('str','console.log(str)');
 
 
 
-console.log(Object.constructor === Function); // true
+// console.log(Object.constructor === Function); // true
 console.log(Object.__proto__ === Function.prototype) // true
+console.log(Function.prototype.__proto__ === Object.prototype); true
 console.log(Function.prototype.__proto__.__proto__) // null
 
 
-
-// 凡是通过new Function创建的对象都是函数对象，其他都是普通对象（通常通过Object创建）
-// 可以通过typeof来判断
 
 function f1(){};
 console.log(typeof f1) //"function"
@@ -110,7 +102,7 @@ console.log(typeof o2) //"object"
 
 
 
-
+console.log('----------');
 var a1 = {};
 var a2 = 123;
 var a3 = new function() {};
@@ -119,7 +111,10 @@ var a5 = new Function('a', 'console.log(a)');
 console.log(a1.__proto__ === Object.prototype); // true
 console.log(a2.__proto__.__proto__ === Object.prototype); // true
 console.log(a3.__proto__.__proto__ === Object.prototype); // true
+
 console.log(a4.__proto__ === Function.prototype); // true
+console.log(a4.__proto__.__proto__ === Object.prototype); //true
 console.log(a5.__proto__ === Function.prototype); // true
-
-
+console.log(a5.__proto__.__proto__ === Object.prototype); // true
+console.log(Function.prototype.__proto__.__proto__); // null
+console.log(Object.prototype.__proto__); // null
