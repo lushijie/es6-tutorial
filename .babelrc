@@ -1,5 +1,5 @@
 {
   "presets": ["env"],
-  "plugins": ['transform-object-rest-spread', 'transform-decorators-legacy'],
+  "plugins": ['transform-object-rest-spread', 'transform-decorators-legacy', 'syntax-dynamic-import'],
   "ignore": []
 }

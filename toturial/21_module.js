@@ -2,17 +2,40 @@
 * @Author: lushijie
 * @Date:   2017-11-10 10:01:40
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-16 15:00:01
+* @Last Modified time: 2018-02-11 16:42:01
 */
-// ES6 的模块自动采用严格模式，不管你有没有在模块头部加上"use strict"
 
-// CommonJS模块
-// let { stat, exists, readFile } = require('fs');
+// 问题1: CommonJS 规范的 module.exports 与 exports 的区别？
+// 答： exports是 module.exports 的引用， exports在module.exports 被改变后，失效。
+// 失效 demo:
+//   // foo1.js
+//   module.exports = {a: 1}
+//   exports.a = 2;
+//
+//   // foo2.js
+//   require('foo1.js').a === 1; //true
 
-// ES6模块
-import { stat, exists, readFile } from 'fs';
 
 
+// 问题2： 模块导入
+// // CommonJS模块导入
+// let { stat:statAlias, exists, readFile } = require('fs');
+
+// // ES6模块导入
+// import { stat as statAlias, exists, readFile } from 'fs';
+
+
+
+// 问题3： es6模块与Commonjs 的区别？
+// 答：
+//   CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+//   CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+
+// 补充：
+// CommonJS 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值
+// ES6 的import有点像 Unix 系统的“符号连接”，原始值变了，import加载的值也会跟着变。因此，ES6 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。
+// 由于 ES6 输入的模块变量，只是一个“符号连接”，所以这个变量是只读的，对它进行重新赋值会报错
+// ES6 export通过接口，输出的是同一个值。不同的脚本加载这个接口，得到的都是同样的实例。
 
 // default imports
 // import foo from "foo";
