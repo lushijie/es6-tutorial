@@ -79,7 +79,19 @@
     import * as circle from './child.js';
   ```
 
+### export 与 import 复合写法
 
+  ```js
+  export { foo, bar } from 'my_module';
+  // 可以简单理解为
+  import { foo, bar } from 'my_module';
+  export { foo, bar };
+
+
+  // 接口改名输出
+  export { foo as myFoo } from 'my_module';
+  export * from 'my_module';
+  ```
 
 
 
