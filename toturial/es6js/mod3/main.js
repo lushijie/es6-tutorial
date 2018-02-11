@@ -1,9 +1,9 @@
 /*
 * @Author: lushijie
-* @Date:   2018-02-11 18:30:51
+* @Date:   2018-02-11 18:34:54
 * @Last Modified by:   lushijie
-* @Last Modified time: 2018-02-11 18:32:20
+* @Last Modified time: 2018-02-11 18:36:08
 */
-import {a, increaseA} from './child.js';
-increaseA(); // TypeError: Cannot read property 'a' of undefined
-console.log('main,', a);
+import mod from './child.js';
+mod.increaseA(); // increaseA, 2
+console.log('main,', mod.a); // main, 2
