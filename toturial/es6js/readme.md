@@ -48,6 +48,7 @@
   ```
 
   export default:
+
     export default命令其实只是输出一个叫做default的变量，所以它后面不能跟变量声明语句。
     一个模块只能有一个默认输出，因此export deault命令只能使用一次
     其他模块加载该模块时，import命令可以为该匿名函数指定任意名字
