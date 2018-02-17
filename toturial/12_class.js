@@ -2,9 +2,11 @@
 * @Author: lushijie
 * @Date:   2017-11-07 11:11:22
 * @Last Modified by:   lushijie
-* @Last Modified time: 2018-02-12 17:26:01
+* @Last Modified time: 2018-02-12 17:28:11
 */
-
+//
+// 类和模块的内部，默认就是严格模式，所以不需要使用use strict指定运行模式
+//
 class Animal {
   constructor(name) {
     this.name = name;
