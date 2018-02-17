@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-06 18:03:07
 * @Last Modified by:   lushijie
-* @Last Modified time: 2018-02-11 15:17:37
+* @Last Modified time: 2018-02-17 19:16:59
 */
 
 // 一、async 函数执行结果是一个 Promise
@@ -74,7 +74,9 @@ function sleep5(time) {
   console.log('5,', new Date());
   let a = sleep5(5000);
   let b = sleep5(2000);
-  let aout = await a; // 一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句
+
+  // 一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句
+  let aout = await a;
   console.log('5a,', aout);
   let bout = await b;
   console.log('5b,', bout);

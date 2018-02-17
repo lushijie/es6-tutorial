@@ -2,9 +2,10 @@
 * @Author: lushijie
 * @Date:   2017-11-07 17:19:37
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-16 18:37:31
+* @Last Modified time: 2018-02-17 20:15:36
 */
-// Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。
+// Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，
+// 因此提供了一种机制，可以对外界的访问进行过滤和改写。
 // let proxy = new Proxy(target, handler);
 
 let obj = new Proxy({}, {
