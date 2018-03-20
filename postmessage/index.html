@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>页面1</title>
+  <script src="http://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+  <input class="msg" type="" name="" placeholder="输入要发送的内容">
+  <button class="btn-submit">提交</button>
+
+  <a href="index3.html" target="_blank" class="open3">index3</a>
+  <iframe id="proxy" src="http://127.0.0.1:8886/index2.html" style="display: none;"></iframe>
+  <script type="text/javascript">
+
+    $('.btn-submit').on('click', function(evt) {
+      evt.preventDefault();
+      postMsg($('.msg').val());
+    });
+
+    function postMsg (msg){
+      var contentWindow = document.getElementById('proxy').contentWindow;
+      contentWindow.postMessage(msg,'http://127.0.0.1:8886');
+    }
+  </script>
+
+
+  <script type="text/javascript">
+    $('.open3').on('click', function(evt) {
+      evt.preventDefault();
+      var domain = 'http://127.0.0.1:8886';
+      var myPopup = window.open('index3.html','myWindow');
+      setInterval(function(){
+        var message = 'Hello!  The time is: ' + (new Date().getTime());
+        myPopup.postMessage(message, domain);
+      },2000);
+
+    });
+  </script>
+
+</body>
+</html>
