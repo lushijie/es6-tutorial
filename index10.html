@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>拖拽</title>
+  <meta charset="utf-8">
+  <style type="text/css">
+    #drag1 {
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      background-color: #c00;
+    }
+    #drag {
+      border: 1px solid #ccc;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+  <script src="https://lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+  <input id="x"  />
+  <input id="y"  />
+  <div id="drag" style="background-color:#a00; border-radius: 5px;">
+    <div class="ads">
+      <div class="xxxx">
+        123
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    /**
+     * IE does not have `getComputedStyle`
+     */
+
+    window.getComputedStyle = window.getComputedStyle || function( element ) {
+      return element.currentStyle;
+    }
+
+    function toJSON(node) {
+      node = node || this;
+
+      // jquery node
+      if (node.selector) {
+        node = node[0];
+      }
+
+      var obj = {
+        nodeType: node.nodeType
+      };
+      if (node.tagName) {
+        obj.tagName = node.tagName.toLowerCase();
+      } else
+      if (node.nodeName) {
+        obj.nodeName = node.nodeName;
+      }
+      if (node.nodeValue) {
+        obj.nodeValue = node.nodeValue;
+      }
+      var attrs = node.attributes;
+      if (attrs) {
+        var length = attrs.length;
+        var arr = obj.attributes = new Array(length);
+        for (var i = 0; i < length; i++) {
+          attr = attrs[i];
+          var tmpValue = '';
+          // 获取除内敛元素以外的元素
+          if (attr.nodeName === 'style') {
+            for (var p in getStyle(node)) {
+              tmpValue += p + ':' + getStyle(node)[p] + ';';
+            }
+          } else {
+            tmpValue = attr.nodeValue;
+          }
+          arr[i] = [attr.nodeName, tmpValue];
+          // arr[i] = [attr.nodeName, attr.nodeValue];
+        }
+      }
+      var childNodes = node.childNodes;
+      if (childNodes) {
+        length = childNodes.length;
+        arr = obj.childNodes = new Array(length);
+        for (i = 0; i < length; i++) {
+          arr[i] = toJSON(childNodes[i]);
+        }
+      }
+      return obj;
+    }
+
+    function toDOM(obj) {
+      if (typeof obj == 'string') {
+        obj = JSON.parse(obj);
+      }
+      var node, nodeType = obj.nodeType;
+      switch (nodeType) {
+        case 1: //ELEMENT_NODE
+          node = document.createElement(obj.tagName);
+          var attributes = obj.attributes || [];
+          for (var i = 0, len = attributes.length; i < len; i++) {
+            var attr = attributes[i];
+            node.setAttribute(attr[0], attr[1]);
+          }
+          break;
+        case 3: //TEXT_NODE
+          node = document.createTextNode(obj.nodeValue);
+          break;
+        case 8: //COMMENT_NODE
+          node = document.createComment(obj.nodeValue);
+          break;
+        case 9: //DOCUMENT_NODE
+          node = document.implementation.createDocument();
+          break;
+        case 10: //DOCUMENT_TYPE_NODE
+          node = document.implementation.createDocumentType(obj.nodeName);
+          break;
+        case 11: //DOCUMENT_FRAGMENT_NODE
+          node = document.createDocumentFragment();
+          break;
+        default:
+          return node;
+      }
+      if (nodeType == 1 || nodeType == 11) {
+        var childNodes = obj.childNodes || [];
+        for (i = 0, len = childNodes.length; i < len; i++) {
+          node.appendChild(toDOM(childNodes[i]));
+        }
+      }
+      return node;
+    }
+
+
+    // 速度快
+    function getStyle(ele) {
+      if (!ele.selector) {
+        ele = $(ele);
+      }
+
+      // css2json
+      function css2json(css) {
+        var s = {};
+        if (!css) return s;
+        if (css instanceof CSSStyleDeclaration) {
+          for (var i in css) {
+            if ((css[i]).toLowerCase) {
+              s[(css[i]).toLowerCase()] = (css[css[i]]);
+            }
+          }
+        } else if (typeof css == "string") {
+          css = css.split(/;\s?/);
+          for (var i in css) {
+            var l = css[i].split(/:\s?/);
+            s[l[0].toLowerCase()] = (l[1]);
+          }
+        }
+        return s;
+      }
+
+      // calc
+      var sheets = document.styleSheets;
+      var o = {};
+      for (var i in sheets) {
+        var rules = sheets[i].rules || sheets[i].cssRules;
+        for (var r in rules) {
+          o = $.extend(o, ele.is(rules[r].selectorText) ? css2json(rules[r].style) : {}, css2json(ele.attr('style')));
+        }
+      }
+      return o;
+    }
+
+
+    function getStylesWithoutDefaults(element) {
+      // creating an empty dummy object to compare with
+      // var dummy = document.createElement( 'element-' + ( new Date().getTime() ) );
+      var dummy = document.createElement(element.nodeName);
+      dummy.setAttribute("class", new Date().getTime());
+      document.body.appendChild( dummy );
+
+      // getting computed styles for both elements
+      var defaultStyles = getComputedStyle( dummy );
+      var elementStyles = getComputedStyle( element );
+
+      // calculating the difference
+      var diff = {};
+      for( var key in elementStyles ) {
+        if(elementStyles.hasOwnProperty(key) && defaultStyles[ key ] !== elementStyles[ key ] )
+        {
+          diff[ key ] = elementStyles[ key ];
+        }
+      }
+
+      // clear dom
+      dummy.remove();
+
+      return diff;
+    }
+
+
+    var $drag = $('#drag');
+    var $x = $('#x');
+    var $y = $('#y');
+    var abc = document.getElementById('drag');
+
+    var dom2JSON = toJSON($drag);
+    console.log('dom2JSON=', dom2JSON);
+    var json2DOM = toDOM(dom2JSON);
+    console.log('json2DOM=', json2DOM);
+
+  </script>
+</body>
+</html>

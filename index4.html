@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style type="text/css">
+    .triangle{
+      position: relative;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-top: 120px solid #f00;
+      border-left: 60px solid transparent;
+      border-right: 60px solid transparent;
+    }
+
+    .triangle:after{
+      position: absolute;
+      content: '';
+      top: -125px;
+      left: -60px;
+      width: 0;
+      height: 0;
+      border-top: 120px solid #fff;
+      border-left: 60px solid transparent;
+      border-right: 60px solid transparent;
+    }
+
+    .chd {
+      display: inline-block;
+      *display: inline;
+      *zoom: 1;
+      background-color: #0f0;
+    }
+  </style>
+</head>
+<body>
+  <span class="triangle">123</span>
+
+  <div class="parent">
+    <span class="chd">aaa</span>
+    <span class="chd">bbb</span>
+    <span class="chd">ccc</span>
+  </div>
+</body>
+</html>

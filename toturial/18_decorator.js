@@ -2,7 +2,7 @@
 * @Author: lushijie
 * @Date:   2017-11-07 17:19:30
 * @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-17 22:21:53
+* @Last Modified time: 2018-05-04 19:44:34
 */
 // // 修饰器只能用于类和类的方法，不能用于函数，因为存在函数提升。
 
@@ -74,43 +74,52 @@
 // }
 // console.log(new Person().name())
 
+class Math0 {
+
+}
+
+const log = (target, name, descriptor) => {
+  console.log('target=', target);
+  let oldValue = descriptor.value;
+
+  descriptor.value = function() {
+    // console.log(`Calling "${name}" with`, arguments);
+    return oldValue.apply(target, arguments);
+  };
+
+  return descriptor;
+}
+
+class Math extends Math0{
+  @log
+  sum(a, b) {
+    return a + b;
+  }
+  add(a, b) {
+    console.log('sum=', this.sum(a, b))
+    return a + b;
+  }
+}
 
 
-// class Math {
-//   @log
-//   add(a, b) {
-//     return a + b;
-//   }
-// }
 
-// function log(target, name, descriptor) {
-//   let oldValue = descriptor.value;
-
-//   descriptor.value = function() {
-//     console.log(`Calling "${name}" with`, arguments);
-//     return oldValue.apply(null, arguments);
-//   };
-
-//   return descriptor;
-// }
-
-// const math = new Math();
+const math = new Math();
 
 // // passed parameters should get logged now
-// math.add(2, 4);
+math.add(2, 4);
 
 
 
-function dec(id){
-  console.log('evaluated', id);
-  return (target, property, descriptor) => console.log('executed', id);
-}
+// function dec(id){
+//   console.log('evaluated', id);
+//   return (target, property, descriptor) => console.log('executed', id);
+// }
 
-class Example {
-    @dec(1)
-    @dec(2)
-    method(){}
-}
+// class Example {
+//     @dec(1)
+//     @dec(2)
+//     method(){}
+// }
 // evaluated 1
 // evaluated 2
 // executed 2

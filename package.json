@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "dependencies": {},
+  "dependencies": {
+    "bcrypt": "^2.0.1"
+  },
   "bin": {},
   "devDependencies": {
     "babel-core": "~6.26.0",
