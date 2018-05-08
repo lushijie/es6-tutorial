@@ -1,0 +1,56 @@
+<!docType html>
+<html>
+<head>
+  <style type="text/css">
+    .drag1 {
+      position: absolute;
+      border:1px solid blue;
+      width:100px;
+      height:100px;
+    }
+  </style>
+  <script src="https://lib.baomitu.com/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+  <input id="x"  />
+  <input id="y"  />
+  <div class="drag drag1"></div>
+  <div class="drag drag2"></div>
+
+  <script>
+    $(function() {
+      var $drag1 = $('.drag1');
+      var $inputx = $('#x');
+      var $inputy = $('#y');
+
+      $('.drag1').on('mousedown', function(evt) {
+        dragHandle(evt, $(this));
+      });
+
+      function dragHandle(event, $ele){
+        var event = event || window.event;
+
+        // mouse pos - drag pos
+        var deltaX = event.clientX - $ele.offset().left;
+        var deltaY = event.clientY - $ele.offset().top;
+
+        $(document).on('mousemove', moveHandle);
+        $(document).on('mouseup', upHandle);
+
+        function moveHandle(event){
+          var left = (event.clientX - deltaX) + 'px';
+          var top = (event.clientY - deltaY) + 'px';
+          $ele.css({left: left, top: top});
+          $inputx.val(left);
+          $inputy.val(top);
+        }
+
+        function upHandle(){
+          $(document).off('mousemove', moveHandle);
+          $(document).off('mouseup', upHandle);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
