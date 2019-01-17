@@ -186,11 +186,7 @@ function asyncSeriesWaterfallHook() {
  */
 function asyncParallelHook() {
   console.log('=== 异步并行钩子 ===');
-  /**
-   * AsyncParallelHook 异步并行钩子，可以使用 tap、tapAsyc、tapPromise 方式定义
-   * callAsync 触发 tap、tapAsync
-   * promise 触发 tap、tapAsync、tapPromise
-   */
+
   const hook31 = new AsyncParallelHook(['arg']);
   hook31.tap('hook31-1', (arg) => {
     console.log('=> hook31-1...', arg);
@@ -199,7 +195,7 @@ function asyncParallelHook() {
     setTimeout(() => {
       console.log('=> hook31-2...', arg);
       cb();
-    }, 10);
+    }, 50);
   });
   hook31.tapAsync('hook31-3', (arg, cb) => {
     setTimeout(() => {
@@ -232,61 +228,79 @@ function asyncParallelBailHook() {
   const hook32 = new AsyncParallelBailHook(['arg']);
   hook32.tap('hook32-1',(arg) => {
     console.log('=> hook32-1...', arg);
-    // return true; // 如果返回true， hook32-2 和 hook32-3 不再执行
-  });
-  hook32.tap('hook32-2',(arg) => {
-    console.log('=> hook32-2...', arg);
-    // return true; // 如果返回 true, hook32-3 和 hook32-4 将不再执行
+    // return true; // 如果返回true， 后面注册的 hook 将不再执行
   });
 
-  hook32.tapAsync('hook32-3', (arg, cb) => {
+  hook32.tapAsync('hook32-2', (arg, cb) => {
+    setTimeout(() => {
+      console.log('=> hook32-2...', arg);
+      cb(null, arg + '-2')
+    }, 50);
+  });
+
+  hook32.tapAsync('hook32-3',(arg, cb) => {
     setTimeout(() => {
       console.log('=> hook32-3...', arg);
-      cb(null, arg)
-    });
+      cb(null, arg + '-4')
+    }, 0);
   });
 
-  hook32.tapAsync('hook32-4',(arg, cb) => {
-    setTimeout(() => {
+  hook32.tapPromise('hook32-4', arg => {
+    return new Promise((resolve) => {
       console.log('=> hook32-4...', arg);
-      cb(null)
+      resolve(arg);
     });
   });
 
-  hook32.callAsync('hook32参数', err => {
-    err && console.log(err);
+  // hook32.callAsync('hook32参数', err => {
+  //   err && console.log(err);
+  // });
+
+  hook32.promise('hook31参数').then((data) => {
+    console.log(data); // 第一个顺序注册的 tapAsync callback 的结果
   });
 }
+
+/**
+ * extends Tapable 使用方式
+ */
+function classHook() {
+  class Tap extends Tapable {
+    constructor() {
+      super();
+      this.hooks = {
+        run: new SyncHook(['word1', 'word2']),
+      };
+    }
+
+    run(word1, word2) {
+      this.hooks.run.call(word1, word2);
+    }
+  }
+
+  const tap = new Tap();
+
+  // 如果未注册将 .run 方法将不执行任何操作
+  tap.hooks.run.tap('run', (word1, word2) => {
+    console.log('=> class run:', word1, word2);
+  });
+
+  tap.run('hello', 'world');
+}
+
 
 // syncHook();
 // syncBailHook();
 // syncLoopHook();
-syncWaterfallHook();
-// asyncParallelHook();
-// asyncParallelBailHook();
+// syncWaterfallHook();
+
 // asyncSeriesHook();
 // asyncSeriesBailHook();
 // asyncSeriesWaterfallHook();
 
+// asyncParallelHook();
+// asyncParallelBailHook();
 
-// /**
-//  * extends Tapable 使用方式
-//  */
-// class Tap extends Tapable {
-//   constructor() {
-//     super();
-//     this.hooks = {
-//       run: new SyncHook(['word1', 'word2']),
-//     };
-//   }
+classHook();
 
-//   run(word1, word2) {
-//     this.hooks.run.call(word1, word2);
-//   }
-// }
 
-// const tap = new Tap();
-// tap.hooks.run.tap('run', (word1, word2) => {
-//   console.log('=> class run:', word1, word2);
-// });
-// tap.run('hello', 'world');
